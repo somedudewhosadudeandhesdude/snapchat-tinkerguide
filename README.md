@@ -435,3 +435,68 @@ This is an unofficial collection of browser-side experiments and is not affiliat
 These experiments are intended for learning and personal client-side customization.
 
 Snapchat's website can change at any time, which may cause selectors, CSS variables, or other experiments to stop working.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# make friends feed shiver
+const feed = document.querySelector('[aria-label="Friends Feed"]');
+
+if (feed) {
+    feed.style.position = "relative";
+
+    let t = 0;
+
+    function shiver() {
+        t += 0.8;
+
+        const x = Math.sin(t * 18) * 4;
+        const y = Math.cos(t * 23) * 3;
+
+        feed.style.transform = `translate(${x}px, ${y}px)`;
+
+        requestAnimationFrame(shiver);
+    }
+
+    shiver();
+}
