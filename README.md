@@ -59,7 +59,6 @@ You can override several of them to create a much darker theme.
 
     --sigBackgroundPrimary: #000000 !important;
     --sigBackgroundSecondary: #000000 !important;
-
     --sigBackgroundFeedHover: #111111 !important;
     --sigBackgroundMessageHover: #111111 !important;
     --sigBackgroundMessageSaved: #111111 !important;
@@ -67,7 +66,7 @@ You can override several of them to create a much darker theme.
 
 html,
 body {
-    background: #000000 !important;
+    background-color: #000000 !important;
     color: #ffffff !important;
 }
 ```
