@@ -1,66 +1,40 @@
-# snapchat-tinkerguide
-# Snapchat Web Tinkering
+
 <p align="center">
   <img src="header.png" width="900">
 </p>
 
-A collection of client-side CSS and JavaScript experiments for customizing and experimenting with the Snapchat Web interface.
+# Snapchat Web Tinkering
 
-This repository documents things I've discovered while poking around Snapchat Web's HTML, CSS variables, and UI elements using browser DevTools.
+A collection of client-side CSS and JavaScript experiments for Snapchat Web.
 
-## What can you do with these snippets?
+This started as me messing around with DevTools and seeing what I could change in Snapchat's UI without modifying Snapchat itself.
 
-* Make Snapchat Web's interface truly black
-* Change the Friends Feed background
-* Change camera backgrounds
-* Use your own images or GIFs as camera backgrounds
-* Experiment with Snapchat's CSS variables
-* Learn how Snapchat Web's UI is structured
-* Make your own client-side themes and modifications
+> **Note:** These experiments are client-side. Snapchat can change its website at any time, so selectors and CSS variables may stop working.
 
-## Important
+---
 
-These are **client-side browser modifications**.
+# Getting Started
 
-They only change what is rendered in your own browser. They do not modify Snapchat's servers, other users' interfaces, or Snapchat's stored data.
+Open [Snapchat Web](https://web.snapchat.com/) and open your browser's Developer Tools.
 
-Snapchat's website is constantly changing, so selectors, CSS variables, and other parts of these snippets may stop working after an update.
+For JavaScript experiments:
 
-Refreshing the page will usually undo DevTools changes.
+1. Open the **Console** tab.
+2. Paste the code.
+3. Press **Enter**.
+4. Return to Snapchat.
 
-## How to use the snippets
+For CSS experiments, you can either use the **Elements** tab or paste CSS through whatever browser-side method you're using.
 
-1. Open [Snapchat Web](https://web.snapchat.com/).
-2. Open your browser's Developer Tools.
-3. Go to the **Console** tab for JavaScript snippets.
-4. Paste a snippet into the console.
-5. Press Enter.
-6. Return to Snapchat and see what changed.
+Most changes made directly through DevTools are temporary and disappear after refreshing the page.
 
-For CSS experiments, you can use the **Elements** tab and inspect the site's styles and variables.
+---
 
-## Repository contents
+# Experiment 1: True Black Theme
 
-### `snippets/`
+Snapchat's dark theme isn't completely black.
 
-Contains individual CSS and JavaScript experiments.
-
-Examples:
-
-* `true-black-theme.css`
-* `friends-feed-red.css`
-* `camera-background.js`
-* `camera-custom-image.js`
-
-### `examples/`
-
-Contains explanations and examples of things you can experiment with.
-
-## How these were discovered
-
-A lot of these modifications came from inspecting Snapchat Web with DevTools and testing individual elements and CSS variables.
-
-For example, Snapchat Web uses variables such as:
+Snapchat Web uses CSS variables to control many of its colors. Some useful variables include:
 
 ```css
 --sigMain
@@ -68,97 +42,12 @@ For example, Snapchat Web uses variables such as:
 --sigBackgroundPrimary
 --sigBackgroundSecondary
 --sigTextPrimary
-```
-
-Changing one variable can affect a surprisingly large part of the interface.
-
-For example:
-
-```js
-document.documentElement.style.setProperty(
-    "--sigSurface",
-    "#000000",
-    "important"
-);
-```
-
-This can change surfaces that use `--sigSurface`.
-
-## Camera background experiments
-
-The camera background is rendered using an image element. Its current element can be found with:
-
-```js
-document.querySelector(
-    "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
-);
-```
-
-The image itself can be hidden while its parent element is given a different background.
-
-This makes it possible to experiment with:
-
-* Solid colors
-* Custom colors
-* Local images
-* GIFs
-* Data URLs
-
-The custom image experiment uses a file picker and `FileReader`, meaning you can select an image directly from your computer without needing to upload it to a website.
-
-## Why don't external image URLs always work?
-
-During testing, external background images sometimes produced:
-
-```text
-Blocked by client
-```
-
-This means the browser or something running in the browser blocked the request. Using a local file converted into a data URL avoids needing to request the image from an external website.
-
-## Why do some modifications disappear?
-
-Snapchat Web uses React, so parts of the page can be destroyed and recreated when navigating around the site.
-
-If you directly modify an element and Snapchat later recreates that element, your modification disappears with the old element.
-
-A `MutationObserver` can watch for those changes and reapply the modification when the element appears again.
-
-## Ideas to experiment with
-
-Some things I'd like to investigate:
-
-* More Snapchat CSS variables
-* Different UI colors
-* Chat background customization
-* Message bubble customization
-* Hover effects
-* Bitmoji backgrounds
-* Other camera elements
-* Custom animations
-* Finding cleaner selectors
-* Making modifications survive more UI changes
-
-## Disclaimer
-
-This is an unofficial collection of browser-side experiments and is not affiliated with Snapchat.
-
-Snapchat may change its website at any time, so some experiments may become outdated or stop working.
-Experiment 1: True Black Theme
-
-Snapchat's dark theme isn't completely black.
-
-Snapchat Web uses CSS variables to control many of its colors. Some useful variables include:
-
---sigMain
---sigSurface
---sigBackgroundPrimary
---sigBackgroundSecondary
---sigTextPrimary
 --sigTextSecondary
+```
 
 You can override several of them to create a much darker theme.
 
+```css
 :root {
     --sigMain: #000000 !important;
     --sigSurface: #000000 !important;
@@ -181,65 +70,87 @@ body {
     background: #000000 !important;
     color: #ffffff !important;
 }
+```
 
 The exact result can depend on which Snapchat theme is currently active.
 
-Experiment 2: Change the Friends Feed
+---
 
-One of the useful discoveries from inspecting Snapchat Web was that the Friends area uses --sigSurface.
+# Experiment 2: Change the Friends Feed
+
+One of the useful discoveries from inspecting Snapchat Web was that the Friends area uses `--sigSurface`.
 
 Try:
 
+```js
 document.documentElement.style.setProperty(
     "--sigSurface",
     "red",
     "important"
 );
+```
 
 If the relevant UI is using that variable, its surface will change to red.
 
-You can replace red with another CSS color or a HEX value.
+You can replace `red` with another CSS color or a HEX value.
 
 For example:
 
+```js
 document.documentElement.style.setProperty(
     "--sigSurface",
     "#000000",
     "important"
 );
-Experiment 3: Solid Camera Background
+```
+
+---
+
+# Experiment 3: Solid Camera Background
 
 The camera background uses an image element.
 
 The element found during testing was:
 
+```js
 document.querySelector(
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
 );
+```
 
 First, hide the original image:
 
+```js
 const img = document.querySelector(
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
 );
 
 img.style.opacity = "0";
+```
 
 Then change its parent's background:
 
+```js
 img.parentElement.style.background = "#000000";
+```
 
-You can replace #000000 with any color.
+You can replace `#000000` with any color.
 
 For example:
 
+```js
 img.parentElement.style.background = "#ff0000";
-Experiment 4: Custom Camera Background
+```
+
+---
+
+# Experiment 4: Custom Camera Background
 
 You can also use an image stored on your computer.
 
 This version opens a file picker.
 
+```js
 const selector =
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img";
 
@@ -271,21 +182,25 @@ input.onchange = () => {
 };
 
 input.click();
+```
 
 After running it, choose an image from your computer.
 
 GIFs can also be selected because the file picker accepts images.
 
-Experiment 5: Persistent Camera Background
+---
+
+# Experiment 5: Persistent Camera Background
 
 There is one problem with the previous experiment.
 
 If you leave the camera and come back, Snapchat may recreate the camera elements.
 
-Because the old <img> element was destroyed, the modification disappears.
+Because the old `<img>` element was destroyed, the modification disappears.
 
-A MutationObserver can watch the page for changes and reapply the background.
+A `MutationObserver` can watch the page for changes and reapply the background.
 
+```js
 const selector =
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img";
 
@@ -333,49 +248,63 @@ input.onchange = () => {
 };
 
 input.click();
+```
 
 This allows the custom background to be reapplied when Snapchat recreates the camera UI.
 
-How the Camera Experiment Works
+---
 
-The camera background is an actual <img> element.
+# How the Camera Experiment Works
+
+The camera background is an actual `<img>` element.
 
 The selector:
 
+```js
 const img = document.querySelector(
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
 );
+```
 
 finds that element.
 
 Instead of replacing the image, the experiment:
 
-Finds the image.
-Makes the image invisible.
-Finds its parent element.
-Gives the parent a new background.
-Uses background-size: cover so the replacement fills the area.
+1. Finds the image.
+2. Makes the image invisible.
+3. Finds its parent element.
+4. Gives the parent a new background.
+5. Uses `background-size: cover` so the replacement fills the area.
 
-This was useful because directly changing the image's src didn't produce the desired result during testing, while modifying the parent background did.
+This was useful because directly changing the image's `src` didn't produce the desired result during testing, while modifying the parent background did.
 
-Using Your Own Colors
+---
+
+# Using Your Own Colors
 
 CSS colors can be written in several ways.
 
 Named color:
 
+```css
 red
+```
 
 RGB:
 
+```css
 rgb(255, 0, 0)
+```
 
 HEX:
 
+```css
 #ff0000
+```
 
 Some example HEX colors:
 
+```text
 Black       #000000
 White       #ffffff
 Dark Gray   #202020
@@ -388,31 +317,41 @@ Yellow      #ffd600
 Green       #20c878
 Cyan        #00cfe8
 Blue        #2979ff
+```
 
 HEX values use six characters:
 
+```text
 #RRGGBB
+```
 
 The first two control red, the next two green, and the last two blue.
 
-Why External Images May Not Work
+---
+
+# Why External Images May Not Work
 
 During testing, attempting to use an external image URL produced:
 
+```text
 Blocked by client
+```
 
 This means the request was blocked somewhere on the client side, such as the browser or a privacy/security filter.
 
-Using a local image with FileReader avoids making an external request for the image.
+Using a local image with `FileReader` avoids making an external request for the image.
 
 The file is converted into a data URL and then used as the background.
 
-Data URL Experiment
+---
+
+# Data URL Experiment
 
 You can also create a background entirely inside the browser without selecting a file.
 
 For example, this creates a black SVG background:
 
+```js
 const img = document.querySelector(
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
 );
@@ -423,55 +362,76 @@ img.parentElement.style.backgroundImage =
     "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'%3E%3Crect width='1000' height='1000' fill='%23000000'/%3E%3C/svg%3E\")";
 
 img.parentElement.style.backgroundSize = "cover";
+```
 
 You can make more complicated SVG backgrounds by changing the SVG inside the data URL.
 
-A Simple Test
+---
+
+# A Simple Test
 
 If you're unsure whether you've found the correct element, you can temporarily make it obvious.
 
 For example:
 
+```js
 const img = document.querySelector(
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
 );
 
 img.style.filter = "brightness(0)";
+```
 
 If the camera background changes, you've found the correct image element.
 
 Another useful test:
 
+```js
 const img = document.querySelector(
     "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
 );
 
 img.style.opacity = "0";
 img.parentElement.style.background = "red";
+```
 
 If the background becomes red, you've found the correct parent layer too.
 
-Resetting Everything
+---
+
+# Resetting Everything
 
 Most of these experiments are temporary.
 
 The easiest way to undo them is simply:
 
-Refresh the Snapchat Web page.
+**Refresh the Snapchat Web page.**
 
 If Snapchat recreates the relevant elements, temporary modifications may also disappear automatically.
 
-Things to Investigate
+---
+
+# Things to Investigate
 
 More experiments could include:
 
-Finding more --sig* CSS variables
-Changing chat backgrounds
-Changing message bubbles
-Changing hover effects
-Finding more camera elements
-Experimenting with Bitmoji UI
-Finding shorter and more reliable selectors
-Testing other React elements
-Creating a complete custom theme
-Documenting newly discovered variables
+* Finding more `--sig*` CSS variables
+* Changing chat backgrounds
+* Changing message bubbles
+* Changing hover effects
+* Finding more camera elements
+* Experimenting with Bitmoji UI
+* Finding shorter and more reliable selectors
+* Testing other React elements
+* Creating a complete custom theme
+* Documenting newly discovered variables
+
+---
+
+# Disclaimer
+
+This is an unofficial collection of browser-side experiments and is not affiliated with Snapchat.
+
+These experiments are intended for learning and personal client-side customization.
+
+Snapchat's website can change at any time, which may cause selectors, CSS variables, or other experiments to stop working.
