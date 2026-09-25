@@ -48,27 +48,23 @@ Snapchat Web uses CSS variables to control many of its colors. Some useful varia
 You can override several of them to create a much darker theme.
 
 ```css
-:root {
-    --sigMain: #000000 !important;
-    --sigSurface: #000000 !important;
+document.documentElement.style.setProperty("--sigMain", "#000000", "important");
+document.documentElement.style.setProperty("--sigSurface", "#000000", "important");
 
-    --sigTextPrimary: #ffffff !important;
-    --sigTextSecondary: #ffffff !important;
-    --sigTextTertiary: #ffffff !important;
-    --sigTextPlaceholder: #ffffff !important;
+document.documentElement.style.setProperty("--sigTextPrimary", "#ffffff", "important");
+document.documentElement.style.setProperty("--sigTextSecondary", "#ffffff", "important");
+document.documentElement.style.setProperty("--sigTextTertiary", "#ffffff", "important");
+document.documentElement.style.setProperty("--sigTextPlaceholder", "#ffffff", "important");
 
-    --sigBackgroundPrimary: #000000 !important;
-    --sigBackgroundSecondary: #000000 !important;
-    --sigBackgroundFeedHover: #111111 !important;
-    --sigBackgroundMessageHover: #111111 !important;
-    --sigBackgroundMessageSaved: #111111 !important;
-}
+document.documentElement.style.setProperty("--sigBackgroundPrimary", "#000000", "important");
+document.documentElement.style.setProperty("--sigBackgroundSecondary", "#000000", "important");
+document.documentElement.style.setProperty("--sigBackgroundFeedHover", "#111111", "important");
+document.documentElement.style.setProperty("--sigBackgroundMessageHover", "#111111", "important");
+document.documentElement.style.setProperty("--sigBackgroundMessageSaved", "#111111", "important");
 
-html,
-body {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-}
+document.documentElement.style.backgroundColor = "#000000";
+document.body.style.backgroundColor = "#000000";
+document.body.style.color = "#ffffff";
 ```
 
 The exact result can depend on which Snapchat theme is currently active.
