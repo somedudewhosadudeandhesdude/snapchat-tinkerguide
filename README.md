@@ -87,5 +87,58 @@ The camera background is rendered using an image element. Its current element ca
 
 ```js
 document.querySelector(
-    "#root > div.Fpg8
+    "#root > div.Fpg8t > div.Vbjsg.WJjwl > div > div > div > img"
+);
 ```
+
+The image itself can be hidden while its parent element is given a different background.
+
+This makes it possible to experiment with:
+
+* Solid colors
+* Custom colors
+* Local images
+* GIFs
+* Data URLs
+
+The custom image experiment uses a file picker and `FileReader`, meaning you can select an image directly from your computer without needing to upload it to a website.
+
+## Why don't external image URLs always work?
+
+During testing, external background images sometimes produced:
+
+```text
+Blocked by client
+```
+
+This means the browser or something running in the browser blocked the request. Using a local file converted into a data URL avoids needing to request the image from an external website.
+
+## Why do some modifications disappear?
+
+Snapchat Web uses React, so parts of the page can be destroyed and recreated when navigating around the site.
+
+If you directly modify an element and Snapchat later recreates that element, your modification disappears with the old element.
+
+A `MutationObserver` can watch for those changes and reapply the modification when the element appears again.
+
+## Ideas to experiment with
+
+Some things I'd like to investigate:
+
+* More Snapchat CSS variables
+* Different UI colors
+* Chat background customization
+* Message bubble customization
+* Hover effects
+* Bitmoji backgrounds
+* Other camera elements
+* Custom animations
+* Finding cleaner selectors
+* Making modifications survive more UI changes
+
+## Disclaimer
+
+This is an unofficial collection of browser-side experiments and is not affiliated with Snapchat.
+
+Snapchat may change its website at any time, so some experiments may become outdated or stop working.
+
