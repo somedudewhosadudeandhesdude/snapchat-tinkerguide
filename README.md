@@ -1,5 +1,8 @@
 # snapchat-tinkerguide
 # Snapchat Web Tinkering
+<p align="center">
+  <img src="header.png" width="900">
+</p>
 
 A collection of client-side CSS and JavaScript experiments for customizing and experimenting with the Snapchat Web interface.
 
